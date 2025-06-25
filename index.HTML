@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BHeart.earth - Regenerative Sanctuary</title>
+  <title>Bheart.earth - Regenerative Sanctuary</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
@@ -21,7 +21,7 @@
       to { opacity: 1; }
     }
     @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
+      from { transform: translateY(40px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
     html {
@@ -32,15 +32,16 @@
       transition: all 0.8s ease-in-out;
     }
     .btn-animated {
-      transition: background-color 0.4s ease, transform 0.3s ease;
+      transition: background-color 0.4s, transform 0.3s, box-shadow 0.3s;
     }
     .btn-animated:hover {
       transform: scale(1.05);
+      box-shadow: 0 8px 24px 0 rgba(126,34,206,0.15);
     }
     .section-animate {
       opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 1s ease-out, transform 1s ease-out;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
     }
     .section-animate.visible {
       opacity: 1;
@@ -70,6 +71,33 @@
         display: block;
       }
     }
+    .animate-fadeIn {
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    .animate-slideUp {
+      animation: slideUp 1.2s ease-in-out;
+    }
+    .card-animated {
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+    .card-animated:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 32px 0 rgba(126,34,206,0.12);
+    }
+    .img-animated {
+      transition: transform 0.5s, box-shadow 0.5s;
+    }
+    .img-animated:hover {
+      transform: scale(1.04);
+      box-shadow: 0 6px 24px 0 rgba(126,34,206,0.13);
+    }
+    .social-animated {
+      transition: transform 0.3s, color 0.3s;
+    }
+    .social-animated:hover {
+      transform: scale(1.15);
+      color: #a78bfa;
+    }
   </style>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -85,80 +113,103 @@
 
       const toggleButton = document.getElementById("mobile-toggle");
       const mobileMenu = document.getElementById("mobile-nav");
+      const hamburgerIcon = document.getElementById("hamburger-icon");
+      const closeIcon = document.getElementById("close-icon");
       toggleButton?.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
+        hamburgerIcon.classList.toggle("hidden");
+        closeIcon.classList.toggle("hidden");
       });
+
+      const navLinks = document.querySelectorAll('.nav-link');
+      function setActiveLink() {
+        let fromTop = window.scrollY + 90;
+        navLinks.forEach(link => {
+          const section = document.querySelector(link.getAttribute('href'));
+          if (section && section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) {
+            link.classList.add('border-b-2', 'border-purple-700');
+          } else {
+            link.classList.remove('border-b-2', 'border-purple-700');
+          }
+        });
+      }
+      window.addEventListener('scroll', setActiveLink);
+      setActiveLink();
     });
   </script>
 </head>
 
 <body class="bg-beige text-gray-800 scroll-smooth">
-  <!-- Navigation -->
-  <nav class="bg-white shadow fixed w-full z-50" aria-label="Main Navigation">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+  <!-- Navigation Bar with blur, opacity, active link highlight, and animated hamburger -->
+  <nav class="bg-white/80 backdrop-blur shadow fixed w-full z-50 transition-all duration-300" aria-label="Main Navigation">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <div class="text-xl font-bold text-purple-800">Bheart.earth</div>
       <div class="space-x-4 text-sm font-medium hidden md:flex">
-        <a href="#profile" class="text-gray-700 hover:text-purple-700">About</a>
-        <a href="#Amena Anantishi" class="text-gray-700 hover:text-purple-700">Amena Anantishi</a>
-        <a href="#I AM" class="text-gray-700 hover:text-purple-700">I AM</a>
-        <a href="#We Remember" class="text-gray-700 hover:text-purple-700">Vision</a>
-        <a href="#ancestry" class="text-gray-700 hover:text-purple-700">Ancestry</a>
-        <a href="#purpose" class="text-gray-700 hover:text-purple-700">Purpose</a>
-        <a href="#journey" class="text-gray-700 hover:text-purple-700">Journey</a>
-        <a href="#healing" class="text-gray-700 hover:text-purple-700">Healing</a>
-        <a href="#retreats" class="text-gray-700 hover:text-purple-700">Retreats</a>
-        <a href="#gratitude" class="text-gray-700 hover:text-purple-700">Gratitude</a>
-        <a href="#care" class="text-gray-700 hover:text-purple-700">Care</a>
-        <a href="#offerings" class="text-gray-700 hover:text-purple-700">Offerings</a>
-        <a href="#networks" class="text-gray-700 hover:text-purple-700">Networks</a>
-        <a href="#call-to-action" class="text-gray-700 hover:text-purple-700">Join</a>
-        <a href="#contact" class="text-gray-700 hover:text-purple-700">Contact</a>
+        <a href="#About" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">About</a>
+        <a href="#Amena Anantishi" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Amena Anantishi</a>
+        <a href="#I AM" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">I AM</a>
+        <a href="#We Remember" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Vision</a>
+        <a href="#ancestry" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Ancestry</a>
+        <a href="#purpose" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Purpose</a>
+        <a href="#journey" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Journey</a>
+        <a href="#healing" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Healing</a>
+        <a href="#retreats" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Retreats</a>
+        <a href="#gratitude" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Gratitude</a>
+        <a href="#care" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Care</a>
+        <a href="#networks" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Networks</a>
+        <a href="#offerings" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Offerings</a>
+        <a href="#call-to-action" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Join</a>
+        <a href="#contact" class="nav-link btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 px-2 py-1 rounded transition">Contact</a>
       </div>
       <div class="md:hidden">
-        <button id="mobile-toggle" class="text-purple-700 focus:outline-none">
-          ☰
+        <button id="mobile-toggle" class="text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-700 p-2 rounded transition" aria-label="Open menu">
+          <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
     </div>
-    <div id="mobile-nav" class="hidden md:hidden px-4 py-2 bg-white space-y-2 text-sm font-medium">
-      <a href="#profile" class="block text-gray-700 hover:text-purple-700">About</a>
-      <a href="#Amena Anantishi" class="block text-gray-700 hover:text-purple-700">Amena Anantishi</a>
-      <a href="#I AM" class="block text-gray-700 hover:text-purple-700">I AM</a>
-      <a href="#We Remember" class="block text-gray-700 hover:text-purple-700">Vision</a>
-      <a href="#ancestry" class="block text-gray-700 hover:text-purple-700">Ancestry</a>
-      <a href="#purpose" class="block text-gray-700 hover:text-purple-700">Purpose</a>
-      <a href="#journey" class="block text-gray-700 hover:text-purple-700">Journey</a>
-      <a href="#healing" class="block text-gray-700 hover:text-purple-700">Healing</a>
-      <a href="#retreats" class="block text-gray-700 hover:text-purple-700">Retreats</a>
-      <a href="#gratitude" class="block text-gray-700 hover:text-purple-700">Gratitude</a>
-      <a href="#care" class="block text-gray-700 hover:text-purple-700">Care</a>
-      <a href="#offerings" class="block text-gray-700 hover:text-purple-700">Offerings</a>
-      <a href="#networks" class="block text-gray-700 hover:text-purple-700">Networks</a>
-      <a href="#call-to-action" class="block text-gray-700 hover:text-purple-700">Join</a>
-      <a href="#contact" class="block text-gray-700 hover:text-purple-700">Contact</a>
+    <div id="mobile-nav" class="hidden md:hidden px-4 py-2 bg-white/90 backdrop-blur space-y-2 text-sm font-medium">
+      <a href="#About" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">About</a>
+      <a href="#Amena Anantishi" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Amena Anantishi</a>
+      <a href="#I AM" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">I AM</a>
+      <a href="#We Remember" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Vision</a>
+      <a href="#ancestry" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Ancestry</a>
+      <a href="#purpose" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Purpose</a>
+      <a href="#journey" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Journey</a>
+      <a href="#healing" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Healing</a>
+      <a href="#retreats" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Retreats</a>
+      <a href="#gratitude" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Gratitude</a>
+      <a href="#care" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Care</a>
+      <a href="#networks" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Networks</a>
+      <a href="#offerings" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Offerings</a>
+      <a href="#call-to-action" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Join</a>
+      <a href="#contact" class="block btn-animated text-gray-700 hover:text-purple-700 focus:ring-2 focus:ring-purple-700 rounded px-2 py-1">Contact</a>
     </div>
   </nav>
   <div class="h-16"></div>
 
-   <!-- Header -->
+  <!-- Header with overlay gradient and animated text -->
   <header class="relative fade-in" id="header">
     <img src="13.png" alt="Header Background" class="w-full object-cover h-96" />
+    <div class="absolute inset-0 bg-gradient-to-b from-purple-900/60 to-transparent"></div>
     <div class="absolute top-10 left-1/2 transform -translate-x-1/2 text-center">
-      <h1 class="text-5xl font-extrabold text-purple-800 tracking-wide drop-shadow-lg">Bheart.earth</h1>
-      <p class="text-2xl text-green-700 mt-4 font-medium italic">A sanctuary for soul-rooted regeneration</p>
+      <h1 class="text-5xl font-extrabold text-purple-800 tracking-wide drop-shadow-lg animate-bounce animate-fadeIn animate-slideUp">Bheart.earth</h1>
+      <p class="text-2xl text-green-700 mt-4 font-medium italic animate-fadeIn animate-slideUp">A sanctuary for soul-rooted regeneration</p>
       <div class="mt-6">
-        <a href="#about" class="inline-block bg-purple-700 text-white px-6 py-3 rounded-full text-lg shadow hover:bg-purple-800 transition btn-animated">Learn More</a>
+        <a href="#About" class="inline-flex items-center bg-gradient-to-r from-purple-700 to-blue-500 text-white px-6 py-3 rounded-full text-lg shadow hover:from-purple-800 hover:to-blue-600 transition btn-animated focus:ring-2 focus:ring-purple-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+          Learn More
+        </a>
       </div>
     </div>
   </header>
 
-    </div>
   <!-- Profile Section -->
-  <section class="section-animate slide-up px-6 py-16 relative" id="about">
+  <section class="section-animate slide-up px-6 py-16 relative" id="About">
     <img src="14.png" alt="Background Image" class="absolute inset-0 w-full h-full object-cover opacity-20 z-0">
     <div class="relative z-10 max-w-3xl mx-auto text-center">
-        <img src="logo.png" alt="Bheart.earth Logo" class="w-60 h-60 rounded-full mx-auto border-4 border-purple-700 shadow-xl mb-6 transform hover:scale-110 transition duration-500 ease-in-out" />
-        <h2 class="text-3xl font-bold text-purple-800 mb-6">About Bheart.earth: A Sanctuary for Soul-Rooted Regeneration</h2>
+        <img src="logo.png" alt="Bheart.earth Logo" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-purple-700 shadow-xl mb-6 transform hover:scale-110 transition duration-500 ease-in-out" />
+        <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-6">About Bheart.earth: A Sanctuary for Soul-Rooted Regeneration</h2>
         <p class="text-lg leading-relaxed mb-4">
             Bheart.earth is more than just a place; it's a practice of returning, remembering, and being fully human in communion with the Earth.
         </p>
@@ -173,18 +224,18 @@
             In a world accelerating away from meaning, BHeart.earth offers a gentle awakening to the beauty of the heart — a slowing down, a deep listening, and a sacred return to inner knowing and Earth's rhythms.
         </p>
     </div>
-</section>
+  </section>
 
-   <!-- Introduction Section -->
-   <section id="Amena Anantishi" class="bg-gradient-to-b from-purple-100 to-blue-50 py-20 px-6 slide-up fade-in" id="introduction">
+  <!-- Introduction Section -->
+  <section id="Amena Anantishi" class="section-animate bg-gradient-to-b from-purple-100 to-blue-50 py-20 px-6 slide-up fade-in" id="introduction">
     <div class="max-w-4xl mx-auto text-center">
-      <img src="her.png" alt="Amena Anantishi" class="w-60 h-60  l mx-auto border-4 border-white shadow-lg mb-6 rounded-full  shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-1" />
+      <img src="her.png" alt="Amena Anantishi" class="img-animated w-60 h-60  l mx-auto border-4 border-white shadow-lg mb-6 rounded-full  shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-1" />
       <div class="relative z-10 text-align:left">
-      <h2 class="text-3xl font-semibold text-purple-800 mb-6">Amena Anantishi</h2>
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-semibold text-purple-800 mb-6">Amena Anantishi</h2>
       <p class="text-lg leading-relaxed">Healer Leader </p>
       <p class="text-lg leading-relaxed mt-4">
         I am  working for weaving the present and future of well-being and regeneration through energy healing work, connection&placemaking, cultivation and care of earth through ecovillages and intentional communities. 
-        The soul’ution to our individual and global suffering and polycriss is remembering we are each a part of a Divine wholesystem and we are here to love and serve each other in togetherness. We are here to become the I am Presence  
+        The soul'ution to our individual and global suffering and polycriss is remembering we are each a part of a Divine wholesystem and we are here to love and serve each other in togetherness. We are here to become the I am Presence  
         I am here to help us all remember and unify on the the  possibility of us living and sharing from our healed unbound, eternal self. 
         Amenanant is the sacred space and call to action for bringing the new earth consciousness and connections with compassion and peace.
       </p>
@@ -192,12 +243,12 @@
    </section>
 
 <!-- I am section -->
-<section id="I AM" class="bg-gradient-to-b from-purple-100 to-blue-50 py-20 px-6 section-animate slide-up rounded-xl shadow-lg relative">
+<section id="I AM" class="section-animate bg-gradient-to-b from-purple-100 to-blue-50 py-20 px-6 section-animate slide-up rounded-xl shadow-lg relative">
   <img src="purplewave.png" alt="Background Image" class="absolute inset-0 w-full h-full object-cover opacity-30 z-0">
   <div class="max-w-4xl mx-auto text-center relative">
-      <img src="her1.png" alt="Amena Anantishi" class="w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6 transform hover:-translate-y-1 transition duration-500" />
+      <img src="her1.png" alt="Amena Anantishi" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6 transform hover:-translate-y-1 transition duration-500" />
       
-      <h2 class="text-3xl font-semibold text-purple-800 mb-6">Embodying the "I AM" Presence</h2>
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-semibold text-purple-800 mb-6">Embodying the "I AM" Presence</h2>
       <p class="text-lg leading-relaxed mb-6">
           My being is a profound reflection of universal truths. I embody:
       </p>
@@ -215,8 +266,8 @@
 <!--we Remember section-->
   <section id="We Remember" class="section-animate bg-gradient-to-b from-purple-100 to-blue-50 py-20 px-6 slide-up fade-in">
     <div class="max-w-4xl mx-auto text-center">
-      <img src="bluewave.png" alt="Background Image" class="absolute inset-0 w-full h-full object-cover opacity-30 z-0">
-      <h2 class="text-3xl font-semibold text-purple-800 mb-6">We Remember</h2>
+      <img src="bluewave.png" alt="Background Image" class="img-animated absolute inset-0 w-full h-full object-cover opacity-30 z-0">
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-semibold text-purple-800 mb-6">We Remember</h2>
       <p class="text-lg leading-relaxed">
         We are a platform, a practice, and a prayer rooted in regenerative healing, spiritual ecology, and embodied wisdom. <br><br>
         Founded by Amena Anantishi Bal — healer, poet, and regenerative visionary — BHeart.earth honors the pulse beneath all things: the heartbeat of the Earth as felt through breath, body, mind, story, and presence.
@@ -240,73 +291,66 @@
       </p>
     </div>
     </section>
-  
-  <!-- Purpose & Commitment Section -->
-  <section id="purpose" class="section-animate py-20 px-6 bg-purple-100 slide-up relative">
-    <img src="14.png" alt="Background Image" class="absolute inset-0 w-full h-full object-cover opacity-30 z-0">
-    <div class="relative z-10 max-w-4xl mx-auto text-center">
-      <img src="purpose.png" alt="Purpose Image" class="w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
-      <h2 class="text-3xl font-bold text-purple-800 mb-6">Our Purpose & Commitment</h2>
-      <h3 class="text-2xl font-semibold text-purple-700 mb-4">A Business Rooted in Well-being and Regeneration</h3>
-      <p class="text-lg text-gray-700 mb-8">
-        Our work at Bheart.earth transcends conventional business. It's defined by the profound belief: **"Let the beauty we know and the love and light we feel inside be the work we do outside."** We are dedicated to co-creating a beautiful universe that champions wellness for all.
-      </p>
-      <p class="text-lg text-gray-700 mb-8">
-        We are in the business of weaving **Sat-Chit-Ananda** (Truth, Consciousness, Bliss) by designing and embodying a life of truth, consciousness, and bliss for people, planetary health, and equity. Our core purpose is to **create joyful communities** that live gently, kindly, and in continuous regeneration with themselves and the Earth.
-      </p>
-      <h3 class="text-2xl font-semibold text-purple-700 mb-4">Our Commitment: Metta-Goodness for a Meta-Crisis</h3>
-      <p class="text-lg text-gray-700 mb-8">
-        Our commitment is to find **simple, soul-rooted solutions to today's metacrisis through "metta-goodness"** (loving-kindness). Our work is deeply grounded in the inquiry: *How do we build a well-lived life of joy and well-being for all?* We believe the answer lies in **consciousness transformation and soul leadership**, activating the spiritual dimension of life.
-      </p>
-      <p class="text-lg text-gray-700 mb-8">
-        This business for good is built on sharing gifts of healing and weaving transformation for holistic well-being—personal, community, and planetary (covering physical, mental, emotional, relational, karmic, social, cultural, economic, ecological, and spiritual dimensions). It's about finding **Balance, Beauty, and Bliss for the entire wholesystem.**
-      </p>
-      <p class="text-lg text-gray-700 mb-8">
-        We are dedicated to designing and creating conditions for **transcendence and systemic shifts** towards personal and planetary evolution, serving as a resource for global regeneration.
-      </p>
-      <h3 class="text-2xl font-semibold text-purple-700 mb-4 mt-8">The Threads of Our Regenerative Web</h3>
-      <p class="text-lg text-gray-700 mb-4">Our work is woven on a powerful loom of principles:</p>
-      <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 text-left max-w-3xl mx-auto">
-        <div>
-          <ul class="list-disc list-inside text-lg leading-relaxed space-y-2">
-            <li>**The Power of Healing**</li>
-            <li>**The Power of Yoga, Meditation & Mindfulness**</li>
-            <li>**The Power of Divine Feminine Energies & Higher Creativity**</li>
-            <li>**The Power of Belonging & Interbeing**</li>
-            <li>**The Power of Kindness & Truth**</li>
-            <li>**The Power of the Heart for Collective Trust & Compassion**</li>
-            <li>**The Power of Authenticity**</li>
-            <li>**The Power of Trust & Inner Compass**</li>
-            <li>**The Power of Presence**</li>
-          </ul>
-        </div>
-        <div>
-          <ul class="list-disc list-inside text-lg leading-relaxed space-y-2">
-            <li>The Power of Collaboration</li>
-            <li>The Power of Community & Shared Resources</li>
-            <li>The Power of Natural Laws</li>
-            <li>The Power of Regenerative Lifestyles</li>
-            <li>The Power of Money for Parity, Well-being & Regeneration</li>
-            <li>The Power of Sufficiency & Abundance</li>
-            <li>The Power of Higher Purpose & Full Potential</li>
-            <li>The Power of Freedom for Bliss</li>
-            <li>The Power of Soul for Service to Divine Creation</li>
-          </ul>
-        </div>
-      </div>
-      <h3 class="text-2xl font-semibold text-purple-700 mb-4 mt-8">Our Mission & Vision</h3>
-      <ul class="list-disc list-inside text-lg leading-relaxed text-left max-w-3xl mx-auto space-y-3">
-        <li>**Mission:** To transform lives, impacting personal well-being and bringing out the best in individuals, creating a positive ripple effect in their environment and ecosystem.</li>
-        <li>**Vision:** To inspire **1,000 new communities by 2030** living in wellness for Earth and all life, in deep connection to each other, nature, and the spiritual dimension.</li>
+  <!-- Purpose & Commitment Section (Succinct) -->
+<section id="purpose" class="section-animate py-20 px-6 bg-purple-100 slide-up relative">
+  <img src="14.png" alt="Background Image" class="absolute inset-0 w-full h-full object-cover opacity-30 z-0">
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <img src="purpose.png" alt="Purpose Image" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
+    
+    <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-6">Our Purpose & Commitment</h2>
+    <h3 class="text-2xl font-semibold text-purple-700 mb-4">Rooted in Well-being & Regeneration</h3>
+    
+    <p class="text-lg text-gray-700 mb-6">
+      At BHeart.earth, we believe work is a sacred expression of beauty, love, and light. We are co-creating a world of wellness, joy, and conscious living—for people and the planet.
+    </p>
+
+    <p class="text-lg text-gray-700 mb-6">
+      Guided by <strong>Sat-Chit-Ananda</strong>—Truth, Consciousness, Bliss—we nurture joyful communities that live in harmony with Earth and each other.
+    </p>
+
+    <h3 class="text-2xl font-semibold text-purple-700 mb-4">Metta-Goodness for a Meta-Crisis</h3>
+    <p class="text-lg text-gray-700 mb-6">
+      We offer soul-rooted responses to global challenges through <em>metta</em> (loving-kindness), spiritual inquiry, and regenerative design. Our focus: healing, wholeness, and transformation across all dimensions of life.
+    </p>
+
+    <p class="text-lg text-gray-700 mb-6">
+      This is more than business—it’s a calling to spark systemic shifts and awaken the spiritual heart of humanity for Earth’s evolution.
+    </p>
+
+    <h3 class="text-2xl font-semibold text-purple-700 mb-4 mt-8">Threads of Our Regenerative Web</h3>
+    <p class="text-lg text-gray-700 mb-4">We are anchored in sacred principles like:</p>
+
+    <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 text-left max-w-3xl mx-auto">
+      <ul class="list-disc list-inside text-lg leading-relaxed space-y-2">
+        <li>Healing & Presence</li>
+        <li>Yoga, Meditation & Mindfulness</li>
+        <li>Divine Feminine & Creativity</li>
+        <li>Belonging & Interbeing</li>
+        <li>Truth, Kindness & Compassion</li>
+      </ul>
+      <ul class="list-disc list-inside text-lg leading-relaxed space-y-2">
+        <li>Collaboration & Community</li>
+        <li>Natural Laws & Regeneration</li>
+        <li>Money as Medicine</li>
+        <li>Sufficiency & Abundance</li>
+        <li>Purpose, Bliss & Service</li>
       </ul>
     </div>
-  </section>
+
+    <h3 class="text-2xl font-semibold text-purple-700 mb-4 mt-8">Our Mission & Vision</h3>
+    <ul class="list-disc list-inside text-lg leading-relaxed text-left max-w-3xl mx-auto space-y-3">
+      <li><strong>Mission:</strong> To uplift lives through healing and soul-aligned leadership—creating ripples of well-being in communities and ecosystems.</li>
+      <li><strong>Vision:</strong> To inspire <strong>1,000 regenerative communities by 2030</strong> rooted in connection, consciousness, and care for all life.</li>
+    </ul>
+  </div>
+</section>
+
 
 
   <!-- The Journey Begins Section -->
   <section id="journey" class="section-animate py-20 px-6 bg-blue-100 slide-up">
     <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">The Sacred Pulse</h2>
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-gray-800 mb-4">The Sacred Pulse</h2>
       <p class="text-lg text-gray-700">
         We hold space for:
         <br>• Inner ecology and healing — returning to wholeness for the self and the community
@@ -322,32 +366,38 @@
   <section id="healing" class="section-animate py-20 px-6 bg-gradient-to-b from-purple-100 to-blue-50 fade-in ">
     <img src="green.png" alt="Background Image" class="absolute inset-0 w-full h-full object-cover opacity-30 z-0">
     <div class="max-w-4xl mx-auto text-center">
-      <img src="healing.png" alt="Healing Image" class="w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
-      <h2 class="text-3xl font-bold text-purple-800 mb-6">Healing Offerings</h2>
+      <img src="healing.png" alt="Healing Image" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-6">Healing Offerings</h2>
       <p class="text-lg text-gray-700 mb-8">
         We offer a range of healing modalities, including energy healing, meditation, and community rituals. Our approach is rooted in the belief that healing happens at the pace of nature, in communion with the Earth and each other.
       </p>
-      <a href="#contact" class="inline-block bg-purple-700 text-white px-6 py-3 rounded-full text-lg shadow hover:bg-purple-800 transition btn-animated">Explore Offerings</a>
+      <a href="#contact" class="btn-animated inline-flex items-center bg-gradient-to-r from-purple-700 to-blue-500 text-white px-6 py-3 rounded-full text-lg shadow hover:from-purple-800 hover:to-blue-600 transition focus:ring-2 focus:ring-purple-700 mt-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+        Explore Offerings
+      </a>
     </div>
   </section>
 
   <!-- Retreats Section -->
   <section id="retreats" class="section-animate py-20 px-6 bg-gradient-to-b from-purple-100 to-blue-50 slide-up relative">
     <div class="max-w-4xl mx-auto text-center relative">
-      <img src="retreats.png" alt="Retreats Image" class="w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
-      <h2 class="text-3xl font-bold text-purple-800 mb-6">Retreats & Gatherings</h2>
+      <img src="retreats.png" alt="Retreats Image" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-6">Retreats & Gatherings</h2>
       <p class="text-lg text-gray-700 mb-8">
         Join us for transformative retreats and gatherings that reconnect you with the sacred pulse of the Earth. Experience healing, community, and the beauty of nature in a supportive environment.
       </p>
-      <a href="#contact" class="inline-block bg-purple-700 text-white px-6 py-3 rounded-full text-lg shadow hover:bg-purple-800 transition btn-animated">Join a Retreat</a>
+      <a href="#contact" class="btn-animated inline-flex items-center bg-gradient-to-r from-purple-700 to-blue-500 text-white px-6 py-3 rounded-full text-lg shadow hover:from-purple-800 hover:to-blue-600 transition focus:ring-2 focus:ring-purple-700 mt-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+        Join a Retreat
+      </a>
     </div>
   </section>
 
   <!-- Gratitude Section -->
   <section id="gratitude" class="section-animate py-20 px-6 bg-gradient-to-b from-purple-100 to-blue-50 fade-in relative">
     <div class="max-w-4xl mx-auto text-center relative">
-      <img src="gratitude.png" alt="Gratitude Image" class="w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
-      <h2 class="text-3xl font-bold text-purple-800 mb-6">Gratitude & Acknowledgments</h2>
+      <img src="gratitude.png" alt="Gratitude Image" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-6">Gratitude & Acknowledgments</h2>
       <p class="text-lg text-gray-700 mb-8">
         We are grateful for the support of our community, partners, and all who contribute to the healing journey. Together, we create a space for love, compassion, and regeneration.
       </p>
@@ -357,44 +407,44 @@
   <!-- Community Care Section -->
   <section id="care" class="section-animate py-20 px-6 bg-gradient-to-b from-yellow-50 to-orange-20 slide-up">
     <div class="max-w-4xl mx-auto text-center">
-      <img src="community care.png" alt="Community Care Image" class="w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
-      <h2 class="text-3xl font-bold text-purple-800 mb-6">Community Care</h2>
+      <img src="community care.png" alt="Community Care Image" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-6">Community Care</h2>
       <p class="text-lg text-gray-700 mb-8">
         We believe in the power of community care. Our gatherings and circles are designed to foster connection, healing, and shared humanity. Join us in creating a space where everyone is welcome.
       </p>
-      <a href="#contact" class="inline-block bg-purple-700 text-white px-6 py-3 rounded-full text-lg shadow hover:bg-purple-800 transition btn-animated">Join a Circle</a>
+      <a href="#contact" class="btn-animated inline-block bg-purple-700 text-white px-6 py-3 rounded-full text-lg shadow hover:bg-purple-800 transition focus:ring-2 focus:ring-purple-700">Join a Circle</a>
     </div>
   </section>
     
   <!-- Networks Section -->
   <section id="networks" class="section-animate py-20 px-6 bg-gradient-to-b from-purple-100 to-blue-50 fade-in">
     <div class="max-w-4xl mx-auto text-center">
-      <img src="networks.png" alt="Networks Image" class="w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
-      <h2 class="text-3xl font-bold text-purple-800 mb-6">Networks & Collaborations</h2>
+      <img src="networks.png" alt="Networks Image" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-6">Networks & Collaborations</h2>
       <p class="text-lg text-gray-700 mb-8">
         We are part of a larger network of healers, visionaries, and community builders. Together, we collaborate to create a regenerative future rooted in love, compassion, and shared resources.
       </p>
     </div>
   </section>
 
-  <!-- Sacred Offerings Section -->
+  <!-- Offerings Section with glassmorphism and hover effects -->
   <section id="offerings" class="section-animate py-20 px-6 bg-gradient-to-b from-white to-purple-50 fade-in">
     <div class="max-w-5xl mx-auto text-center">
       <img src="greenhands.png" alt="Background Image" class="absolute inset-0 w-full h-full object-cover opacity-30 z-0">
-      <h2 class="text-3xl font-bold text-purple-800 mb-4">Sacred Offerings</h2>
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-4">Sacred Offerings</h2>
       <p class="text-lg text-gray-700 mb-12">
         Whether you are a seeker, a soil-tender, or simply tired of being disconnected from yourself and this living planet, you are welcome here.
       </p>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-1">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card-animated p-6 bg-white/60 backdrop-blur rounded-xl shadow-lg border border-white/30 hover:scale-105 hover:shadow-2xl transition-transform">
           <h3 class="text-xl font-semibold text-purple-700 mb-2">Ritual & Ceremony</h3>
           <p class="text-sm text-gray-600">Offerings to reconnect with the sacred through nature-based practices and community presence.</p>
         </div>
-        <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-1">
+        <div class="card-animated p-6 bg-white/60 backdrop-blur rounded-xl shadow-lg border border-white/30 hover:scale-105 hover:shadow-2xl transition-transform">
           <h3 class="text-xl font-semibold text-blue-700 mb-2">Sacred Storytelling</h3>
           <p class="text-sm text-gray-600">Poetic ecology, soul-led narratives, and mythic remembrance as medicine for a new world.</p>
         </div>
-        <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-1">
+        <div class="card-animated p-6 bg-white/60 backdrop-blur rounded-xl shadow-lg border border-white/30 hover:scale-105 hover:shadow-2xl transition-transform">
           <h3 class="text-xl font-semibold text-green-700 mb-2">Community Circles</h3>
           <p class="text-sm text-gray-600">Gatherings rooted in presence, beauty, and shared humanity — where healing happens together.</p>
         </div>
@@ -405,26 +455,34 @@
   <!-- Call to Action Section -->
   <section id="call-to-action" class="section-animate py-20 bg-purple-100 text-center fade-in">
     <div class="max-w-3xl mx-auto px-6">
-      <img src="call to action.png" alt="Call to Action Image" class="w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
-      <h2 class="text-3xl font-bold text-purple-800 mb-4">Welcome to BHeart.earth</h2>
+      <img src="call to action.png" alt="Call to Action Image" class="img-animated w-60 h-60 rounded-full mx-auto border-4 border-white shadow-lg mb-6" />
+      <h2 class="animate-fadeIn animate-slideUp text-3xl font-bold text-purple-800 mb-4">Welcome to BHeart.earth</h2>
       <p class="text-lg text-gray-700 mb-6">
         This is not smart tech. This is ancestral intelligence. This is not a product. This is a presence. <br><br>
         🌐 We remember. We remember. We remember — Together.
       </p>
-      <a href="#contact" class="inline-block bg-purple-700 text-white px-6 py-3 rounded-full text-lg shadow hover:bg-purple-800 transition btn-animated">Come as you are</a>
+      <a href="#contact" class="btn-animated inline-block bg-purple-700 text-white px-6 py-3 rounded-full text-lg shadow hover:bg-purple-800 transition focus:ring-2 focus:ring-purple-700">Come as you are</a>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer with social icons, gradient divider, and accessibility improvements -->
   <footer id="contact" class="bg-gray-900 text-white py-12">
+    <div class="h-1 w-full bg-gradient-to-r from-purple-400 to-blue-400 my-4"></div>
     <div class="max-w-6xl mx-auto px-6 text-center">
       <h3 class="text-xl font-semibold mb-2">Connect with BHeart.earth</h3>
       <p class="text-sm mb-4">For community gatherings, poetic ecology, or sacred conversations:</p>
       <p class="mb-2">Email: <a href="mailto:hello@bheart.earth" class="underline text-purple-300">hello@bheart.earth</a></p>
-      <p class="mb-6">Follow:
-        <a href="#" class="underline text-purple-300 mx-2">Instagram</a> |
-        <a href="#" class="underline text-purple-300 mx-2">YouTube</a> |
-        <a href="#" class="underline text-purple-300 mx-2">Newsletter</a>
+      <p class="mb-6 flex justify-center items-center gap-4">
+        <span>Follow:</span>
+        <a href="#" class="hover:text-purple-400 focus:ring-2 focus:ring-purple-700 rounded p-1 social-animated" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect width="20" height="20" x="2" y="2" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17" cy="7" r="1.5"/></svg>
+        </a>
+        <a href="#" class="hover:text-purple-400 focus:ring-2 focus:ring-purple-700 rounded p-1 social-animated" aria-label="YouTube">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="3"/><polygon points="10,9 16,12 10,15"/></svg>
+        </a>
+        <a href="#" class="hover:text-purple-400 focus:ring-2 focus:ring-purple-700 rounded p-1 social-animated" aria-label="Newsletter">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+        </a>
       </p>
       <p class="text-xs text-gray-400">© 2025 BHeart.earth. All rights reserved.</p>
     </div>
@@ -432,6 +490,3 @@
 </body>
 
 </html>
-</body>
-</html>
-
